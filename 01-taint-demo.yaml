@@ -4,21 +4,21 @@ metadata:
   name: nginx
   #replicas set resource labels
   labels:
-    purpose: dp-demo
+    purpose: taint-demo
     project: roboshop
 spec:
   replicas: 1
   selector:
     #these lables are used to sleect pods
     matchLabels:
-      purpose: dp-demo
+      purpose: taint-demo
       project: roboshop
       #pod definition
   template:
     metadata:
       labels:
         project: roboshop
-        purpose: dp-demo
+        purpose: taint-demo
     spec:
       containers:
         - name: nginx
