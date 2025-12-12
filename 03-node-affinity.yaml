@@ -12,6 +12,10 @@ spec:
             operator: In
             values: 
             - us-east-1c
+          - key: addedLabel
+            operator: In
+            values: 
+            - true1           
 
 
   containers:
