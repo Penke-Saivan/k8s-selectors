@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: tolerate-nodeSelctors
   #replicas set resource labels
   labels:
     purpose: taint-demo
