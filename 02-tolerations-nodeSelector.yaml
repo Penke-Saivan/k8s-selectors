@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  #replicas set resource labels
+  labels:
+    purpose: taint-demo
+    project: roboshop
+spec:
+  replicas: 1
+  selector:
+    #these lables are used to sleect pods
+    matchLabels:
+      purpose: taint-demo
+      project: roboshop
+      #pod definition
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        purpose: taint-demo
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: ip-192-168-52-96.ec2.internal
+      containers:
+        - name: nginx
+          image: nginx
+      tolerations:
+        - key: "project"
+          operator: "Equal"
+          effect: "NoSchedule"    
+          value: "roboshop"
+         # kubectl taint nodes ip-192-168-52-96.ec2.internal project=roboshop:NoSchedule
+
+# Labels for tained node to be selcted by:             alpha.eksctl.io/cluster-name=roboshop-dev                                                                                                                         │
+# │                     alpha.eksctl.io/nodegroup-name=roboshop-dev                                                                                                                       │
+# │                     beta.kubernetes.io/arch=amd64                                                                                                                                     │
+# │                     beta.kubernetes.io/instance-type=t3.small                                                                                                                         │
+# │                     beta.kubernetes.io/os=linux                                                                                                                                       │
+# │                     eks.amazonaws.com/capacityType=SPOT                                                                                                                               │
+# │                     eks.amazonaws.com/nodegroup=roboshop-dev                                                                                                                          │
+# │                     eks.amazonaws.com/nodegroup-image=ami-07f3d541fc1623e0d                                                                                                           │
+# │                     eks.amazonaws.com/sourceLaunchTemplateId=lt-07233304bf0c91e9d                                                                                                     │
+# │                     eks.amazonaws.com/sourceLaunchTemplateVersion=1                                                                                                                   │
+# │                     failure-domain.beta.kubernetes.io/region=us-east-1                                                                                                                │
+# │                     failure-domain.beta.kubernetes.io/zone=us-east-1f                                                                                                                 │
+# │                     k8s.io/cloud-provider-aws=8bb250398402c1e52ca3dc196187e5cb                                                                                                        │
+# │                     kubernetes.io/arch=amd64                                                                                                                                          │
+# │          **** kubernetes.io/hostname=ip-192-168-52-96.ec2.internal    *****                                                                                                          │
+# │                     kubernetes.io/os=linux                                                                                                                                            │
+# │                     node.kubernetes.io/instance-type=t3.small                                                                                                                         │
+# │                     topology.k8s.aws/zone-id=use1-az5                                                                                                                                 │
+# │                     topology.kubernetes.io/region=us-east-1               

@@ -23,3 +23,9 @@ spec:
       containers:
         - name: nginx
           image: nginx
+
+# kubectl taint nodes ip-192-168-52-96.ec2.internal project=roboshop:NoSchedule
+# node/ip-192-168-52-96.ec2.internal tainted
+
+#k9s
+# curl -sS https://webinstall.dev/k9s | bash
